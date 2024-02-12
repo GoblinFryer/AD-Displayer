@@ -4,7 +4,7 @@ AD-Displayer is a simple interface that as the vocation to centralized AD's info
 
 ![addisplayer](https://github.com/GoblinFryer/AD-Displayer/assets/158450292/ef7c4a3e-b503-42dd-b719-40e775ab951f)
 
-## 📋 Features  
+## 📋 Features/To Do
 
 -  Display AD user or computer groups ✅ 
 -  Display AD basic informations for user or computer ✅ 
@@ -22,21 +22,18 @@ To install AD-Displayer just double click on the .exe file. As simple as that.
 
 Each button have a specific interaction with the textboxe. Let see how each button work. 👇 
 
-| 1. **INFOS Button** |
-:---------------------:
+#### 1. **INFOS Button** 
 
 - The first textbox is used for user ID, as follow: **Alias** or **Firstname Lastname** (order is important)
 - The second text is used for PC ID, as follow: **AD computer's name**
 
 Then click on INFOS button and the result should be displayed in the third textbox (the big one).
 
-| 2. **AD Groups Button** |
-:-------------------------:
+#### 2. **AD Groups Button**
 
 Here, only the first textbox is used. Simply type the computer name or user ID (*alias* or *firstname lastname*) and then press AD groups.
 
-| 3. **Compare Button** |
-:-----------------------:
+#### 3. **Compare Button**
 
 For this one, the two textboxes are used and it will compare the first entry (typed into 1.) to the second entry (typed into 2.) and then it will compare AD groups that the first entry have that the second one do not have (order is important here) and will display the result.
 
@@ -49,25 +46,27 @@ You have the possibility to modify what the script can display pretty easily. He
 - User's AD informations
 - Search suggestions
 
-**User AD informations**
+#### 1. **User AD informations**
 
-To modify this parameter just look for the following line (in the *$infos.add_clock block*):
+To modify this parameter just look for the following line (in the *$infos.add_click block*):
 
-*$properties = "displayed","properties" and $PCproperties = "displayed","properties"*
+ ` $properties = "displayed","properties" and $PCproperties = "displayed","properties" `
 
-Here, specify what parameters you want to see - you can use the following command in PowerShell to look at all available parameters *'Get-ADUser -Identity "username" -Properties *'**. Then, just assigned those parameters to *$properties*.
+Here, specify what parameters you want to see - you can use the following command in PowerShell to look at all available parameters ` 'Get-ADUser -Identity "username" -Properties * ` .
 
-*example: $properties = "AccountExpirationDate","created"*
+Then, just assigned those parameters to *$properties*.
 
-**Search Suggestions**
+` example: $properties = "AccountExpirationDate","created" `
+
+#### 2. **Search Suggestions**
 
 Just look for the following lines (in #TEXTBOX1 and #TEXTBOX2):
 
-*$ou ='OU=,OU=,DC=,DC=,DC='*
+` $ou ='OU=,OU=,DC=,DC=,DC=' `
 
 You just need to specify Domain Controller (DC) and Organizational Unit (OU).
 
-*example: $ou = 'OU=computers,OU=city,DC=my','DC=domain'*
+` example: $ou = 'OU=computers,OU=city,DC=my','DC=domain' `
 
 ## Status
 
