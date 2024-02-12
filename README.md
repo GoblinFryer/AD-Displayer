@@ -4,7 +4,11 @@ AD-Displayer is a simple interface that as the vocation to centralized AD's info
 
 ![addisplayer](https://github.com/GoblinFryer/AD-Displayer/assets/158450292/ef7c4a3e-b503-42dd-b719-40e775ab951f)
 
-## 📋 Features/To Do
+## Status
+
+Still a work in progress
+
+## Features/To Do
 
 -  Display AD user or computer groups ✅ 
 -  Display AD basic informations for user or computer ✅ 
@@ -67,10 +71,6 @@ Just look for the following lines (in #TEXTBOX1 and #TEXTBOX2):
 You just need to specify Domain Controller (DC) and Organizational Unit (OU).
 
 ` example: $ou = 'OU=computers,OU=city,DC=my','DC=domain' `
-
-## Status
-
-**Still a work in progress** 🔨
 
 [^1]: It tries to
 [^2]: the application might not work properly on your environment do not hesitate to modify the source code
