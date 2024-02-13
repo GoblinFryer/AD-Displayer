@@ -1,8 +1,11 @@
- ###FENETRE###
+Add-Type -AssemblyName System.Windows.Forms
+[System.Windows.Forms.Application]::EnableVisualStyles()
+ 
+###FENETRE###
  
     $folderForm = New-Object System.Windows.Forms.Form
     $folderform.text = "AD Displayer"
-    $folderform.BackColor = '#EEB033'
+    $folderform.BackColor = '#336EE2'
     $folderform.MaximizeBox = $true
     $folderForm.MinimumSize = New-Object System.Drawing.Size(577,600)
     $folderForm.MaximumSize = New-Object System.Drawing.Size(577,600)
@@ -38,11 +41,12 @@
     $compare.ForeColor = '#000'
     $compare.Location = '383,60'
     $folderForm.Controls.Add($compare)
+
 ###LABELS###
  
     $label1 = New-object System.Windows.Forms.Label
     $label1.font = New-Object Drawing.Font("Arial", 9, [System.Drawing.FontStyle]::Bold)
-    $label1.text = 'ID user:'
+    $label1.text = 'ID:'
     $label1.autosize = $true
     $label1.location = '30,10'
     $folderForm.controls.Add($label1)
@@ -68,8 +72,8 @@
     $textuser.size = New-Object System.Drawing.Size(170,20)
     $textuser.location = '30,30'
 
-    #création liste de suggestion
-    $ou ='OU=,OU=,DC=,DC=,DC=,DC=' # <<< renseignez votre domaine et OU ici
+    #cr‚ation liste de suggestion
+    $ou ='OU=,OU=,DC=,DC=,DC=,DC='
     $ADusersName = Get-ADUser -Filter * -SearchBase $ou | Select-Object -ExpandProperty Name | Sort-Object
     $ADUsers = Get-ADUser -Filter * -SearchBase $ou | Select-Object givenname, surname | Sort-Object
     $GivennameSurname = foreach ($user in $ADUsers){"{0} {1}" -f $user.givenname, $user.surname}
@@ -86,7 +90,7 @@
     $textuser2.size = New-Object System.Drawing.Size(170,20)
     $textuser2.location = '30,60'
 
-    $ou ='OU=,OU=,DC=,DC=,DC=,DC=' # <<< renseignez votre domaine et OU ici
+    $ou ='OU=,OU=,DC=,DC=,DC=,DC='
     $ADusersName = Get-ADUser -Filter * -SearchBase $ou | Select-Object -ExpandProperty Name | Sort-Object
     $ADUsers = Get-ADUser -Filter * -SearchBase $ou | Select-Object givenname, surname | Sort-Object
     $GivennameSurname = foreach ($user in $ADUsers){"{0} {1}" -f $user.givenname, $user.surname}
@@ -109,7 +113,7 @@
 
 ###EVENTHANDLER###
 
-#bloc qui récupère les valeurs indiquées dans $properties pour les afficher dans la textbox de la GUI
+#bloc qui r‚cupŠre les valeurs indiqu‚es dans $properties pour les afficher dans la textbox de la GUI
 $infos.add_click({
     
     $user = $textuser.text
@@ -153,7 +157,7 @@ $infos.add_click({
 
 })
 
-#Bloc qui liste les groupes AD de l'utilisateur renseigné dans le champ $textuser (textbox 1.)
+#Bloc qui liste les groupes AD de l'utilisateur renseign‚ dans le champ $textuser (textbox 1.)
 $group.add_click({
 
     $user = $textuser.Text
@@ -250,13 +254,13 @@ $compare.add_click({
 
         $groupe1 = Get-ADuser -Identity "$user" -Properties memberof | Select-Object -ExpandProperty "memberof" | sort-object
         $groupe1 = get-adcomputer "$IDpc" -Properties memberof | Select-Object -ExpandProperty "memberof"
-        $groupcn1 = $groupe1 | ForEach-Object {
+        $groupcn1 = $groupe1 | ForEach-Object{
 
-                if ($_ -match 'CN=([^,]+)'){
+            if($_ -match 'CN=([^,]+)'){
 
-                    $Matches[1]
+                $Matches[1] + "`n"
 
-                }
+            }
 
         }
 
@@ -268,17 +272,17 @@ $compare.add_click({
         $givenname = $prenomnom[0]
         $surname = $prenomnom[1]
 
-        $groupe1 = Get-ADUser -Filter {GivenName -eq $givenname -and Surname -eq $surname} -Properties memberof | Select-Object -ExpandProperty memberof
+        $groupe1 = Get-ADUser -Filter {GivenName -eq $givenname -and Surname -eq $surname} -Properties memberof | Select-Object -ExpandProperty "memberof"
         $groupcn1 = $groupe1 | ForEach-Object{
 
             if($_ -match 'CN=([^,]+)'){
 
-                $Matches[1]
+                $Matches[1] + "`n"
 
             }
 
         }
-        
+
     }
 
     elseif($user -match '^[^ ]+ [^ ]+ [^ ]+$'){
@@ -287,30 +291,30 @@ $compare.add_click({
         $givenname = $prenomnom[0]
         $surname = $prenomnom[1]+" "+$prenomnom[2]
 
-        $groupe1 = Get-ADUser -Filter {GivenName -eq $givenname -and Surname -eq $surname} -Properties memberof | Select-Object -ExpandProperty memberof
+        $groupe1 = Get-ADUser -Filter {GivenName -eq $givenname -and Surname -eq $surname} -Properties memberof | Select-Object -ExpandProperty "memberof"
         $groupcn1 = $groupe1 | ForEach-Object{
 
             if($_ -match 'CN=([^,]+)'){
 
-                $Matches[1]
+                $Matches[1] + "`n"
 
             }
 
         }
-        
+
     }
 
     if($user2 -match '^[^ ]+$'){
 
         $groupe2 = Get-ADuser -Identity "$user2" -Properties memberof | Select-Object -ExpandProperty "memberof" | sort-object
         $groupe2 = get-adcomputer "$IDpc2" -Properties memberof | Select-Object -ExpandProperty "memberof"
-        $groupcn2 = $groupe2 | ForEach-Object {
+        $groupcn2 = $groupe2 | ForEach-Object{
 
-                if ($_ -match 'CN=([^,]+)'){
+            if($_ -match 'CN=([^,]+)'){
 
-                    $Matches[1]
+                $Matches[1] + "`n"
 
-                }
+            }
 
         }
 
@@ -319,81 +323,47 @@ $compare.add_click({
     elseif($user2 -match '^[^ ]+ [^ ]+$'){
 
         $prenomnom2 = $user2 -split " "
-        $givenname = $prenomnom2[0]
-        $surname = $prenomnom2[1]
+        $givenname2 = $prenomnom2[0]
+        $surname2 = $prenomnom2[1]
 
-        $groupes = Get-ADUser -Filter {GivenName -eq $givenname2 -and Surname -eq $surname2} -Properties memberof | Select-Object -ExpandProperty memberof
-        $groupcn2 = $groupes | ForEach-Object{
+        $groupe2 = Get-ADUser -Filter {GivenName -eq $givenname2 -and Surname -eq $surname2} -Properties memberof | Select-Object -ExpandProperty "memberof"
+        $groupcn2 = $groupe2 | ForEach-Object{
 
             if($_ -match 'CN=([^,]+)'){
 
-                $Matches[1]
+                $Matches[1] + "`n"
 
             }
 
         }
 
     }
-
+    
     elseif($user2 -match '^[^ ]+ [^ ]+ [^ ]+$'){
 
         $prenomnom2 = $user2 -split " "
         $givenname2 = $prenomnom2[0]
         $surname2 = $prenomnom2[1]+" "+$prenomnom2[2]
 
-        $groupes = Get-ADUser -Filter {GivenName -eq $givenname2 -and Surname -eq $surname2} -Properties memberof | Select-Object -ExpandProperty memberof
-        $groupcn2 = $groupes | ForEach-Object{
+        $groupe2 = Get-ADUser -Filter {GivenName -eq $givenname2 -and Surname -eq $surname2} -Properties memberof | Select-Object -ExpandProperty "memberof"
+        $groupcn2 = $groupe2 | ForEach-Object{
 
             if($_ -match 'CN=([^,]+)'){
 
-                $Matches[1]
+                $Matches[1] + "`n"
 
             }
 
         }
-        
-    }
-
-
-    $groupe2 = Get-ADuser -Identity "$user2" -Properties memberof | Select-Object -ExpandProperty "memberof" | sort-object
-    $groupe2 = get-adcomputer "$IDpc2" -Properties memberof | Select-Object -ExpandProperty "memberof"
-    $groupcn2 = $groupe2 | ForEach-Object {
-
-        if ($_ -match 'CN=([^,]+)'){
-
-            $Matches[1]
-
-        }
 
     }
 
-    #Variable qui compare les valeurs récupérées dans $groupcn1 et $groupcn2 et affiche les valeurs non-communes dans la textbox de la GUI
-    #Le bloc compare les valeurs présentent pour le premier utilisateur et qui ne sont PAS présentes pour le second (l'ordre est donc IMPORTANT)
-    $notismilar = $groupcn1 | where-object {$_ -notin $groupcn2} | sort-object
-    $textboxresult.text = $notismilar -join [System.Environment]::NewLine
+    #Variable qui compare les valeurs r‚cup‚r‚es dans $groupcn1 et $groupcn2 et affiche les valeurs non-communes dans la textbox de la GUI
+    #Le bloc compare les valeurs pr‚sentent pour le premier utilisateur et qui ne sont PAS pr‚sentes pour le second (l'ordre est donc IMPORTANT)
+    $comparaison = compare-object $groupcn1 $groupcn2 | where-object {$_.sideindicator -eq "<="} | Select-Object -ExpandProperty InputObject | Sort-Object
+    $textboxresult.text = $comparaison -join [System.Environment]::NewLine
 
 })
 
-$pc.add_click({
-
-    #récupére les groupes AD du PC dans 1. et les stock dans la variable $test2
-    $IDpc = $textuser.text
-    $pc = get-adcomputer "$IDpc" -Properties memberof | Select-Object -ExpandProperty "memberof"
-    
-    #Confition qui vérifie si 'EntNoScrSavGPO' est présente sur le poste indiqué dans la case 1. en récupérant les valeurs présente dans la condition précédente
-    if($pc -match "EntNoScrSavGPO"){
-
-        $textboxresult.text = "GPO presente"
-
-    }
-
-    else{
-
-        $textboxresult.text = "GPO non-presente"
-
-    }
-
-})
-
-#Nécessaire pour l'affichage de la fenêtre (GUI):
+#N‚cessaire pour l'affichage de la fenˆtre (GUI):
 $folderform.ShowDialog()
