@@ -15,7 +15,7 @@ Still a work in progress
 -  Compare AD groups from user or computers ✅ 
 -  Search suggestions ✅
 -  Search for a specific AD group linked or not to a user or a computer
--  Addind rights directly through AD-Displayer
+-  Adding rights directly through AD-Displayer
 -  Improving ergonomy
 
 ##  **1. How To Launch** 
