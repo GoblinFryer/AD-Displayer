@@ -2,7 +2,7 @@
 
 AD-Displayer is a simple interface that as the vocation to centralized AD's informations to simplify data consultation. [^1] [^2]
 
-![addisplayer](https://github.com/GoblinFryer/AD-Displayer/assets/158450292/ef7c4a3e-b503-42dd-b719-40e775ab951f)
+![image](https://github.com/GoblinFryer/AD-Displayer/assets/158450292/553fda8d-1688-454c-81ac-5c600edc97ee)
 
 ## Status
 
