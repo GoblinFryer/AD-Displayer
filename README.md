@@ -6,7 +6,7 @@ AD-Displayer is a simple interface that as the vocation to centralized AD's info
 
 ## Status
 
-Still a work in progress
+NO LONGER SUPPORTED - a more advanced app is on the way
 
 ## Features/To Do
 
